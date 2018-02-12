@@ -345,18 +345,31 @@ static NSString * const kEnvVarPassThroughPrefix = @"XCTOOL_TEST_ENV_";
 
 - (NSDictionary *)testEnvironmentWithSpecifiedTestConfiguration
 {
-  NSArray *testCasesToSkip = [self testCasesToSkip];
+//  NSArray *testCasesToSkip = [self testCasesToSkip];
 
   Class XCTestConfigurationClass = NSClassFromString(@"XCTestConfiguration");
   NSAssert(XCTestConfigurationClass, @"XCTestConfiguration isn't available");
 
-  XCTestConfiguration *configuration = [[XCTestConfigurationClass alloc] init];
-  [configuration setProductModuleName:_buildSettings[Xcode_PRODUCT_MODULE_NAME]];
-  [configuration setTestBundleURL:[NSURL fileURLWithPath:[_simulatorInfo productBundlePath]]];
-  [configuration setTestsToSkip:[NSSet setWithArray:testCasesToSkip]];
-  [configuration setReportResultsToIDE:NO];
+//  XCTestConfiguration *configuration = [[XCTestConfigurationClass alloc] init];
+//  [configuration setProductModuleName:_buildSettings[Xcode_PRODUCT_MODULE_NAME]];
+//  [configuration setTestBundleURL:[NSURL fileURLWithPath:[_simulatorInfo productBundlePath]]];
+//  [configuration setTestsToSkip:[NSSet setWithArray:testCasesToSkip]];
+//  [configuration setReportResultsToIDE:NO];
+//
+//  [configuration setInitializeForUITesting:YES];
+//  [configuration setTestsMustRunOnMainThread:YES];
+//  [configuration setTargetApplicationBundleID:@"ru.1extreme.zebra"];
+//  [configuration setTargetApplicationPath:@"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-AppTests-aswrqxzzqfkrbkeiumwtdlkqxcsy/Build/Products/Debug-iphonesimulator/TestProject-AppTests.app"];
 
-  NSString *XCTestConfigurationFilename = [NSString stringWithFormat:@"%@-%@", _buildSettings[Xcode_PRODUCT_NAME], [configuration.sessionIdentifier UUIDString]];
+    NSString *xcodeGeneratedConfiguration = @"/Users/nekto/Projects/others/xctool_tests/TestProject-UITests/xcode_test/LaunchSessions/586DB709-4861-41E3-A950-715D1B42D8EE/remote-container/tmp/TestProject-UITestsUITests.xctestconfiguration";
+    XCTestConfiguration *configuration = [NSKeyedUnarchiver unarchiveObjectWithFile:xcodeGeneratedConfiguration];
+  [configuration setReportActivities:NO];
+  [configuration setReportResultsToIDE:NO];
+  [configuration setSessionIdentifier:nil];
+  [configuration setPathToXcodeReportingSocket:nil];
+  NSLog(@"configuration: %@", configuration);
+
+  NSString *XCTestConfigurationFilename = [NSString stringWithFormat:@"%@-%@", _buildSettings[Xcode_PRODUCT_MODULE_NAME], [configuration.sessionIdentifier UUIDString]];
   NSString *XCTestConfigurationFilePath = [MakeTempFileWithPrefix(XCTestConfigurationFilename) stringByAppendingPathExtension:@"xctestconfiguration"];
   if ([[NSFileManager defaultManager] fileExistsAtPath:XCTestConfigurationFilePath]) {
     [[NSFileManager defaultManager] removeItemAtPath:XCTestConfigurationFilePath error:nil];

@@ -59,6 +59,7 @@ static char *const kEventQueueLabel = "xctool.events";
 
 static FILE *__stdout;
 static FILE *__stderr;
+static FILE *__stdhelper;
 
 static NSMutableArray *__testExceptions = nil;
 static int __testSuiteDepth = 0;
@@ -436,10 +437,48 @@ static void XCTestCaseSuite_performTest(id self, SEL sel, id arg1)
     XCPerformTestWithSuppressedExpectedAssertionFailures(self, originalSelector, arg1);
 }
 
+#pragma mark - blabla
+
+//static void  XCUIApplication_launchUsingXcode(id self, SEL sel, id arg1)
+//{
+//    SEL originalSelector = @selector(__XCUIApplication__launchUsingXcode:);
+//    // Call through original implementation
+//    objc_msgSend(self, originalSelector, NO);
+//}
+
 #pragma mark - _enableSymbolication
 static BOOL XCTestCase__enableSymbolication(id self, SEL sel)
 {
   return NO;
+}
+
+//static id XCTestDriver_sharedTestDriver(Class cls, SEL cmd)
+//{
+////    NSLog(@"[xctoool] sharedTestDriver: %@", [NSClassFromString(@"XCTestDriver") performSelector:@selector(sharedTestDriver)]);
+////    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+////        NSLog(@"[xctoool] new test driver: %@", [NSClassFromString(@"XCTestDriver") performSelector:@selector(new)]);
+////    });
+//    static id driver = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        driver = (id)[NSClassFromString(@"XCTestDriver") performSelector:@selector(new)];
+//        NSLog(@"xctoool custom driver: %@", driver);
+//    });
+//    return driver;
+//}
+//
+static void XCTestDriver_logDebugMessage(id self, void * _cmd, id arg2)
+{
+  NSLog(@"[ldm] %@", arg2);
+
+  NSString *str = [NSString stringWithFormat:@"%@", arg2];
+  NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+  fwrite([data bytes], 1, [data length], __stdhelper);
+  fputs("\n", __stdhelper);
+  fflush(__stdhelper);
+
+  SEL originalSelector = @selector(__XCTestDriver_logDebugMessage:);
+  ((void (*)(id, SEL, id))objc_msgSend)(self, originalSelector, arg2);
 }
 
 #pragma mark - Test Scope
@@ -545,6 +584,15 @@ static void SwizzleXCTestMethodsIfAvailable()
     XTSwizzleSelectorForFunction(NSClassFromString(@"XCTestCase"),
                                  @selector(performTest:),
                                  (IMP)XCTestCase_performTest);
+//    XTSwizzleSelectorForFunction(NSClassFromString(@"XCUIApplication"),
+//                                 @selector(_launchUsingXcode:),
+//                                 (IMP)XCUIApplication_launchUsingXcode);
+//    XTSwizzleClassSelectorForFunction(NSClassFromString(@"XCTestDriver"),
+//                                      @selector(sharedTestDriver),
+//                                      (IMP)XCTestDriver_sharedTestDriver);
+    XTSwizzleSelectorForFunction(NSClassFromString(@"XCTestDriver"),
+                                 @selector(logDebugMessage:),
+                                 (IMP)XCTestDriver_logDebugMessage);
     if ([NSClassFromString(@"XCTestCase") respondsToSelector:@selector(_enableSymbolication)]) {
       // Disable symbolication thing on xctest 7 because it sometimes takes forever.
       XTSwizzleClassSelectorForFunction(NSClassFromString(@"XCTestCase"),
@@ -637,6 +685,8 @@ __attribute__((constructor)) static void EntryPoint()
     int stderrHandle = dup(STDERR_FILENO);
     __stderr = fdopen(stderrHandle, "w");
   }
+
+  __stdhelper = fopen("/tmp/xctool/otesthelper.txt", "w");
 
   UpdateTestScope();
 

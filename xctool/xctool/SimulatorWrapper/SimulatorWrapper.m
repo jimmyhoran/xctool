@@ -74,6 +74,63 @@ static const NSString * kOptionsWaitForDebuggerKey = @"wait_for_debugger";
   NSMutableDictionary *environmentEdited = [environment mutableCopy];
   environmentEdited[kOtestShimStdoutFilePath] = otestShimOutputPath;
 
+  environmentEdited = [@{
+  @"__XCODE_BUILT_PRODUCTS_DIR_PATHS": @"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator",
+  @"__XPC_DYLD_FRAMEWORK_PATH": @"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator",
+  @"__XPC_DYLD_LIBRARY_PATH": @"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator",
+  @"CFFIXED_USER_HOME": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/Containers/Data/Application/38CF9465-209B-4D94-97EF-D79983B416AE",
+//  @"CUPS_SERVER": @"/private/tmp/com.apple.launchd.zo2f2bNRge/Listeners",
+  @"DYLD_FALLBACK_FRAMEWORK_PATH": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks",
+  @"DYLD_FALLBACK_LIBRARY_PATH": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/lib",
+  @"DYLD_FRAMEWORK_PATH": @"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator:/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/Developer/Library/PrivateFrameworks",
+  @"DYLD_LIBRARY_PATH": @"/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator:/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/Developer/Library/PrivateFrameworks",
+  @"DYLD_ROOT_PATH": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot",
+  @"IOS_SIMULATOR_SYSLOG_SOCKET": @"/private/tmp/com.apple.CoreSimulator.SimDevice.3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/syslogsock",
+  @"IPHONE_SHARED_RESOURCES_DIRECTORY": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data",
+  @"IPHONE_SIMULATOR_ROOT": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot",
+  @"IPHONE_TVOUT_EXTENDED_PROPERTIES": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/Library/Application Support/Simulator/extended_display.plist",
+//  @"MTC_CRASH_ON_REPORT": @(1),
+//  @"OS_ACTIVITY_DT_MODE": @(YES),
+  @"SIMULATOR_AUDIO_DEVICES_PLIST_PATH": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/var/run/com.apple.coresimulator.audio.plist",
+  @"SIMULATOR_AUDIO_SETTINGS_PATH": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/var/run/simulatoraudio/audiosettings.plist",
+  @"SIMULATOR_BOOT_TIME": @(1517792571),
+  @"SIMULATOR_CAPABILITIES": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/DeviceTypes/iPhone 5s.simdevicetype/Contents/Resources/capabilities.plist",
+  @"SIMULATOR_DEVICE_NAME": @"iPhone 5s",
+  @"SIMULATOR_EXTENDED_DISPLAY_PROPERTIES": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/Library/Application Support/Simulator/extended_display.plist",
+  @"SIMULATOR_HID_SYSTEM_MANAGER": @"/Library/Developer/PrivateFrameworks/CoreSimulator.framework/Resources/Platforms/iphoneos/Library/Frameworks/SimulatorHID.framework",
+  @"SIMULATOR_HOST_HOME": @"/Users/nekto",
+  @"SIMULATOR_LEGACY_ASSET_SUFFIX": @"iphone",
+  @"SIMULATOR_LOG_ROOT": @"/Users/nekto/Library/Logs/CoreSimulator/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7",
+  @"SIMULATOR_MAINSCREEN_HEIGHT": @(1136),
+  @"SIMULATOR_MAINSCREEN_PITCH": @"326.000000",
+  @"SIMULATOR_MAINSCREEN_SCALE": @"2.000000",
+  @"SIMULATOR_MAINSCREEN_WIDTH": @(640),
+  @"SIMULATOR_MEMORY_WARNINGS": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/var/run/memory_warning_simulation",
+  @"SIMULATOR_MODEL_IDENTIFIER": @"iPhone6,1",
+  @"SIMULATOR_PRODUCT_CLASS": @"N51",
+  @"SIMULATOR_ROOT": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot",
+  @"SIMULATOR_RUNTIME_BUILD_VERSION": @"15C107",
+  @"SIMULATOR_RUNTIME_VERSION": @"11.2",
+  @"SIMULATOR_SHARED_RESOURCES_DIRECTORY": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data",
+  @"SIMULATOR_UDID": @"3479E69C-7D6B-4702-A920-6F2AD1A1B3A7",
+  @"SIMULATOR_VERSION_INFO": @"CoreSimulator 494.33 - Device: iPhone 5s - Runtime: iOS 11.2 (15C107) - DeviceType: iPhone 5s",
+//  @"TESTMANAGERD_SIM_SOCK": @"/private/tmp/com.apple.launchd.EDnjFmv3XE/com.apple.testmanagerd.unix-domain.socket",
+  @"XCODE_DBG_XPC_EXCLUSIONS": @"com.apple.dt.xctestSymbolicator",
+//  @"XPC_FLAGS": @"0x0",
+//  @"XPC_SERVICE_NAME": @"UIKitApplication:com.apple.test.TestProject-UITestsUITests-Runner[0xdc3e][56231]",
+//  @"XPC_SIMULATOR_LAUNCHD_NAME": @"com.apple.CoreSimulator.SimDevice.3479E69C-7D6B-4702-A920-6F2AD1A1B3A7",
+  @"CLASSIC": @(1),
+  @"HOME": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/Containers/Data/Application/38CF9465-209B-4D94-97EF-D79983B416AE",
+  @"NSUnbufferedIO": @(YES),
+  @"PATH": @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/sbin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/sbin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/local/bin",
+  @"TMPDIR": @"/Users/nekto/Library/Developer/CoreSimulator/Devices/3479E69C-7D6B-4702-A920-6F2AD1A1B3A7/data/Containers/Data/Application/38CF9465-209B-4D94-97EF-D79983B416AE/tmp",
+  @"XCTestConfigurationFilePath": @"/var/folders/8p/n028bzz51m52b38w37wb0pbn2tm091/T/com.apple.dt.XCTest/IDETestRunSession-0300A52B-5FC2-4693-BF41-3FE9CCFEE84F/TestProject-UITestsUITests-9BF84E29-B99E-4879-90B4-809845E09731/LaunchSessions/A6CD0511-EF24-4546-A569-5B8818B15653/remote-container/tmp/TestProject-UITestsUITests-A6CD0511-EF24-4546-A569-5B8818B15653.xctestconfiguration",
+    } mutableCopy];
+
+//  environmentEdited = [environment mutableCopy];
+  [environmentEdited addEntriesFromDictionary:environment];
+  environmentEdited[kOtestShimStdoutFilePath] = otestShimOutputPath;
+
   /*
    * Passing the same set of arguments and environment as Xcode 6.4.
    */
@@ -87,6 +144,8 @@ static const NSString * kOptionsWaitForDebuggerKey = @"wait_for_debugger";
     kOptionsStderrKey: simStdoutRelativePath,
     kOptionsWaitForDebuggerKey: @"0",
   };
+
+//  NSLog(@"options: %@", options);
 
   ReportStatusMessageBegin(reporters,
                            REPORTER_MESSAGE_INFO,

@@ -60,4 +60,9 @@
  */
 @property (nonatomic, copy) NSString *macroExpansionTarget;
 
+/**
+ * Path to a runner of UI test bundle.
+ */
+@property (nonatomic, copy) NSString *runnerPath;
+
 @end

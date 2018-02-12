@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "0920"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "NO"
@@ -389,6 +389,12 @@
             ReferencedContainer = "container:xctool.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-sdk iphonesimulator run-tests -uiTest /Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator/TestProject-UITestsUITests-Runner.app/PlugIns/TestProject-UITestsUITests.xctest:/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator/TestProject-UITestsUITests-Runner.app/TestProject-UITestsUITests-Runner:/Users/nekto/Library/Developer/Xcode/DerivedData/TestProject-UITests-fqplafkizynabudrkliyxtkkkehy/Build/Products/Debug-iphonesimulator/TestProject-UITests.app/TestProject-UITests"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

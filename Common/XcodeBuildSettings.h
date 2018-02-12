@@ -37,3 +37,6 @@ extern NSString * const Xcode_TARGET_BUILD_DIR;
 extern NSString * const Xcode_TARGETED_DEVICE_FAMILY;
 extern NSString * const Xcode_TEST_FRAMEWORK_SEARCH_PATHS;
 extern NSString * const Xcode_TEST_HOST;
+extern NSString * const Xcode_TEST_TARGET_NAME;
+extern NSString * const Xcode_UI_RUNNER_APP;
+extern NSString * const Xcode_USES_XCTRUNNER;

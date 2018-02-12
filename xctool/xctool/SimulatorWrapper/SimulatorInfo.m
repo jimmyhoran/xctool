@@ -335,7 +335,7 @@ static const NSInteger KProductTypeAppleTV = 3;
 - (NSMutableDictionary *)simulatorLaunchEnvironment
 {
   NSString *sdkName = _buildSettings[Xcode_SDK_NAME];
-  NSString *ideBundleInjectionLibPath = [_buildSettings[Xcode_PLATFORM_DIR] stringByAppendingPathComponent:@"Developer/Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection"];
+//  NSString *ideBundleInjectionLibPath = [_buildSettings[Xcode_PLATFORM_DIR] stringByAppendingPathComponent:@"Developer/Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection"];
   NSMutableDictionary *environment = nil;
   NSMutableArray *librariesToInsert = [NSMutableArray array];
   if ([sdkName hasPrefix:@"macosx"]) {
@@ -350,15 +350,15 @@ static const NSInteger KProductTypeAppleTV = 3;
   } else {
     NSAssert(false, @"'%@' sdk is not yet supported", sdkName);
   }
-  [librariesToInsert addObject:ideBundleInjectionLibPath];
+//  [librariesToInsert addObject:ideBundleInjectionLibPath];
 
   [environment addEntriesFromDictionary:@{
     @"DYLD_INSERT_LIBRARIES" : [librariesToInsert componentsJoinedByString:@":"],
     @"NSUnbufferedIO" : @"YES",
-    @"XCInjectBundle" : [self productBundlePath],
-    @"XCInjectBundleInto" : [self testHostPath],
-    @"AppTargetLocation": [self testHostPath],
-    @"TestBundleLocation": [self productBundlePath],
+//    @"XCInjectBundle" : [self productBundlePath],
+//    @"XCInjectBundleInto" : [self testHostPath],
+//    @"AppTargetLocation": [self testHostPath],
+//    @"TestBundleLocation": [self productBundlePath],
   }];
 
   return environment;

@@ -35,28 +35,20 @@ static const NSInteger kMaxRunTestsAttempts = 3;
   NSString *sdkName = _buildSettings[Xcode_SDK_NAME];
   NSAssert([sdkName hasPrefix:@"iphonesimulator"] || [sdkName hasPrefix:@"appletvsimulator"], @"Unexpected SDK: %@", sdkName);
 
-  // Sometimes the TEST_HOST will be wrapped in double quotes.
-  NSString *testHostPath = [_buildSettings[Xcode_TEST_HOST] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\""]];
-  NSString *testHostAppPath = [testHostPath stringByDeletingLastPathComponent];
-  NSString *testHostPlistPath = [[testHostPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Info.plist"];
-
-  if (![[NSFileManager defaultManager] isExecutableFileAtPath:testHostPath]) {
-    ReportStatusMessage(_reporters, REPORTER_MESSAGE_ERROR,
-                        @"Your TEST_HOST '%@' does not appear to be an executable.", testHostPath);
-    *startupError = @"TEST_HOST not executable.";
+  NSString *testHostAppPath;
+  NSString *testHostBundleID =
+  [self bundleIDForAppAtPath:_buildSettings[Xcode_TEST_HOST]
+                     appPath:&testHostAppPath
+                       error:startupError];
+  if (testHostBundleID == nil) {
     return;
   }
 
-  NSDictionary *testHostInfoPlist = [NSDictionary dictionaryWithContentsOfFile:testHostPlistPath];
-  if (!testHostInfoPlist) {
-    ReportStatusMessage(_reporters, REPORTER_MESSAGE_ERROR,
-                        @"Info.plist for TEST_HOST missing or malformatted.");
-    *startupError = @"Bad Info.plist for TEST_HOST";
-    return;
-  }
-
-  NSString *testHostBundleID = testHostInfoPlist[@"CFBundleIdentifier"];
-  NSAssert(testHostBundleID != nil, @"Missing 'CFBundleIdentifier' in Info.plist");
+  NSString *testRunnerAppPath;
+  NSString *testRunnerBundleID =
+  [self bundleIDForAppAtPath:_buildSettings[Xcode_UI_RUNNER_APP]
+                     appPath:&testHostAppPath
+                       error:startupError];
 
   BOOL (^prepareSimulator)(BOOL freshSimulator, BOOL resetSimulator) = ^(BOOL freshSimulator, BOOL resetSimulator) {
     if (freshSimulator || resetSimulator) {
@@ -133,6 +125,14 @@ static const NSInteger kMaxRunTestsAttempts = 3;
                                                  error:startupError]) {
         return NO;
       }
+
+      if (testRunnerBundleID != nil &&
+          ![SimulatorWrapper uninstallTestHostBundleID:testRunnerBundleID
+                                                device:[_simulatorInfo simulatedDevice]
+                                             reporters:_reporters
+                                                 error:startupError]) {
+            return NO;
+          }
     }
 
     // Always install the app before running it.  We've observed that
@@ -147,6 +147,14 @@ static const NSInteger kMaxRunTestsAttempts = 3;
     // is always set correctly.
     if (![SimulatorWrapper installTestHostBundleID:testHostBundleID
                                     fromBundlePath:testHostAppPath
+                                            device:[_simulatorInfo simulatedDevice]
+                                         reporters:_reporters
+                                             error:startupError]) {
+      return NO;
+    }
+    if (testRunnerBundleID != nil && testRunnerAppPath != nil &&
+        ![SimulatorWrapper installTestHostBundleID:testRunnerBundleID
+                                    fromBundlePath:testRunnerAppPath
                                             device:[_simulatorInfo simulatedDevice]
                                          reporters:_reporters
                                              error:startupError]) {
@@ -204,7 +212,7 @@ static const NSInteger kMaxRunTestsAttempts = 3;
   // Let's try several times to run before reporting about failure to callers.
   for (NSInteger remainingAttempts = kMaxRunTestsAttempts - 1; remainingAttempts >= 0; --remainingAttempts) {
     NSError *error = nil;
-    BOOL infraSucceeded = [SimulatorWrapper runHostAppTests:testHostBundleID
+    BOOL infraSucceeded = [SimulatorWrapper runHostAppTests:testRunnerBundleID ?: testHostBundleID
                                                      device:[_simulatorInfo simulatedDevice]
                                                   arguments:appLaunchArgs
                                                 environment:appLaunchEnvironment
@@ -242,6 +250,27 @@ static const NSInteger kMaxRunTestsAttempts = 3;
     // Restarting simulator
     prepareSimulator(YES, NO);
   }
+}
+
+- (NSString *)bundleIDForAppAtPath:(NSString *)path appPath:(NSString **)appPath error:(NSString **)error {
+  // Sometimes the path is wrapped in double quotes.
+  path = [path stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\""]];
+  if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
+    ReportStatusMessage(_reporters, REPORTER_MESSAGE_ERROR,
+                        @"Spefied app path '%@' does not appear to be an executable.", path);
+    *error = @"App path not executable.";
+    return nil;
+  }
+  *appPath = [path stringByDeletingLastPathComponent];
+  NSString *plistPath = [*appPath stringByAppendingPathComponent:@"Info.plist"];
+  NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+  if (plist[@"CFBundleIdentifier"] == nil) {
+    ReportStatusMessage(_reporters, REPORTER_MESSAGE_ERROR,
+                        @"Info.plist for app at path '%@' is missing or malformatted: %@.", path, plist);
+    *error = @"Bad Info.plist";
+    return nil;
+  }
+  return plist[@"CFBundleIdentifier"];
 }
 
 @end
